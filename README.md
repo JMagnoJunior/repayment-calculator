@@ -25,4 +25,18 @@ run the script: `start_local_mvn_script.sh` or type
 
     > mvn install
     > java -jar target/repayment-schedule-service-1.0-SNAPSHOT.jar
+
+
+### Endpoint 
+
+POST /generate-plan - generate repayment plan
+     
+    > curl --location --request POST 'localhost:8080/generate-plan' \
+      --header 'Content-Type: application/json' \
+      --data-raw '{
+         "loanAmount" : "5000",
+        "nominalRate" : "5.0",
+        "duration" : 24,
+        "startDate" : "2018-01-01T00:00:01Z"
+     }
     
