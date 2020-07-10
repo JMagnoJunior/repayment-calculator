@@ -1,6 +1,9 @@
 ## Repayment Schedule Service
 
-A basic service to generate repayment plans
+A basic service to generate repayment plans.
+
+ps: There is no documentation on this code because I consider a a better approach to put the api spec.
+in a external project following the open api approach.
 
 ## How to run this service:
 
