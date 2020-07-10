@@ -20,7 +20,6 @@ Follow the steps for each environment:
 #### linux/mac you can run:
 run the script: `start_local_mvn_script.sh` or type
 
-    > mvn dependency:copy-dependencies
     > mvn install
-    > java -cp target/repayment-schedule-service-1.0-SNAPSHOT.jar:target/dependency/* com.magnojr.repaymentscheduleservice.RepaymentScheduleServiceApplication
- 
+    > java -jar target/repayment-schedule-service-1.0-SNAPSHOT.jar
+    
