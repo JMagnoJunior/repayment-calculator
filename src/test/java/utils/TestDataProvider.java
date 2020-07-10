@@ -1,6 +1,6 @@
 package utils;
 
-import dtos.RepaymentPlanParametersDTO;
+import com.magnojr.repaymentscheduleservice.dtos.RepaymentPlanParametersDTO;
 
 import java.time.OffsetDateTime;
 

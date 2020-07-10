@@ -1,4 +1,4 @@
-package dtos;
+package com.magnojr.repaymentscheduleservice.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

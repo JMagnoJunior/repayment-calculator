@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.magnojr.repaymentscheduleservice.domain.BorrowerPayment;
 import com.magnojr.repaymentscheduleservice.domain.RepayentPlan;
-import dtos.RepaymentPlanParametersDTO;
+import com.magnojr.repaymentscheduleservice.dtos.RepaymentPlanParametersDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-public class GeneratePlanControllerTest {
+class GeneratePlanControllerTest {
 
 
     @Autowired
@@ -37,7 +37,7 @@ public class GeneratePlanControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void itShouldGenerateRepaymentPlanControllerWhenReceiveValidInputParameters() throws Exception {
+    void itShouldGenerateRepaymentPlanControllerWhenReceiveValidInputParameters() throws Exception {
 
         final RepaymentPlanParametersDTO parameteres = TestDataProvider.buildDefaultRepaymentPlanDTO();
         MockHttpServletResponse response = mockMvc.perform(post("/generate-plan")
@@ -46,7 +46,7 @@ public class GeneratePlanControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andReturn().getResponse();
 
-        RepayentPlan repayentPlan = toRepayentPlan(response.getContentAsString());
+        RepayentPlan repayentPlan = toRepaymentPlan(response.getContentAsString());
 
         List<BorrowerPayment> borrowerPaymentList = repayentPlan.getBorrwerPayments();
         Assertions.assertThat(borrowerPaymentList.get(0).getBorrowerPaymentAmount()).isEqualTo(219.36);
@@ -73,7 +73,7 @@ public class GeneratePlanControllerTest {
     }
 
     @Test
-    public void itShouldReturnClientErrorWhenReceiveInvalidInputParameter() throws Exception {
+    void itShouldReturnClientErrorWhenReceiveInvalidInputParameter() throws Exception {
 
         final RepaymentPlanParametersDTO invalidParameter = TestDataProvider.buildRepaymentPlanDTOWithNegativeLoanAmount();
 
@@ -83,15 +83,15 @@ public class GeneratePlanControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
-    private String toJson(RepaymentPlanParametersDTO parameteres) {
+    private String toJson(RepaymentPlanParametersDTO parameters) {
         try {
-            return objectMapper.writeValueAsString(parameteres);
+            return objectMapper.writeValueAsString(parameters);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private RepayentPlan toRepayentPlan(String json) {
+    private RepayentPlan toRepaymentPlan(String json) {
         try {
             return objectMapper.readValue(json, RepayentPlan.class);
         } catch (JsonProcessingException e) {

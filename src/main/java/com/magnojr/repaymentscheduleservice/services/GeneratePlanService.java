@@ -2,7 +2,7 @@ package com.magnojr.repaymentscheduleservice.services;
 
 import com.magnojr.repaymentscheduleservice.domain.BorrowerPayment;
 import com.magnojr.repaymentscheduleservice.domain.RepayentPlan;
-import dtos.RepaymentPlanParametersDTO;
+import com.magnojr.repaymentscheduleservice.dtos.RepaymentPlanParametersDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeneratePlanService {
 
-    private final RepaymentCalculatorService repaymentCalculatorService;
 
     public RepayentPlan generateRepaymentPlan(RepaymentPlanParametersDTO repaymentPlanParametersDTO) {
         log.info("Generating repayment plan for input: {}", repaymentPlanParametersDTO);
@@ -34,7 +33,7 @@ public class GeneratePlanService {
         final double nominalRate = repaymentPlanParametersDTO.getNominalRate();
 
         double interestPrincipal = repaymentPlanParametersDTO.getLoanAmount();
-        double annuityPayment = repaymentCalculatorService.calculateAnnuityPayment(
+        double annuityPayment = RepaymentCalculatorService.calculateAnnuityPayment(
                 repaymentPlanParametersDTO.getDuration(),
                 repaymentPlanParametersDTO.getNominalRate(),
                 repaymentPlanParametersDTO.getLoanAmount()
@@ -55,7 +54,7 @@ public class GeneratePlanService {
         double outstandingPrincipal = initialOutstandingPrincipal;
         for (int i = 0; i < duration; i++) {
 
-            BorrowerPayment borrowerPayment = repaymentCalculatorService.calculateBorrowerPayment(
+            BorrowerPayment borrowerPayment = RepaymentCalculatorService.calculateBorrowerPayment(
                     outstandingPrincipal,
                     nominalRate,
                     annuityPayment,
